@@ -28,7 +28,7 @@ export const ArticleParamsForm = ({
 	styleValues,
 	changeStyleValues,
 }: ArticleParamsFormProps) => {
-	const [isOpen, setIsOpen] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	const defaultStyleValues = useRef<ArticleStateType>(styleValues);
 	const rootRef = useRef<HTMLDivElement>(null);
@@ -53,21 +53,21 @@ export const ArticleParamsForm = ({
 	}
 
 	useOutsideClickClose({
-		isOpen,
+		isOpen: isMenuOpen,
 		rootRef,
-		onChange: setIsOpen,
+		onChange: setIsMenuOpen,
 	});
 
 	return (
 		<div ref={rootRef}>
 			<ArrowButton
-				isOpen={isOpen}
+				isOpen={isMenuOpen}
 				onChange={(state) => {
-					setIsOpen(!state);
+					setIsMenuOpen(!state);
 				}}
 			/>
 			<aside
-				className={clsx(styles.container, isOpen && styles.container_open)}>
+				className={clsx(styles.container, isMenuOpen && styles.container_open)}>
 				<form
 					className={styles.form}
 					onSubmit={handleSubmitForm}
@@ -81,7 +81,8 @@ export const ArticleParamsForm = ({
 						title='Шрифт'
 						onChange={(selected) => {
 							changeFormState('fontFamilyOption', selected);
-						}}></Select>
+						}}
+					/>
 					<RadioGroup
 						name='Размер шрифта'
 						selected={formState.fontSizeOption}
@@ -89,14 +90,16 @@ export const ArticleParamsForm = ({
 						title='Размер шрифта'
 						onChange={(selected) => {
 							changeFormState('fontSizeOption', selected);
-						}}></RadioGroup>
+						}}
+					/>
 					<Select
 						selected={formState.fontColor}
 						options={fontColors}
 						title='Цвет шрифта'
 						onChange={(selected) => {
 							changeFormState('fontColor', selected);
-						}}></Select>
+						}}
+					/>
 					<Separator />
 					<Select
 						selected={formState.backgroundColor}
@@ -104,14 +107,16 @@ export const ArticleParamsForm = ({
 						title='Цвет фона'
 						onChange={(selected) => {
 							changeFormState('backgroundColor', selected);
-						}}></Select>
+						}}
+					/>
 					<Select
 						selected={formState.contentWidth}
 						options={contentWidthArr}
 						title='Ширина контента'
 						onChange={(selected) => {
 							changeFormState('contentWidth', selected);
-						}}></Select>
+						}}
+					/>
 					<div className={styles.bottomContainer}>
 						<Button title='Сбросить' type='reset' />
 						<Button title='Применить' type='submit' />
